@@ -8,6 +8,8 @@ import math
 import datetime
 import random as rd
 
+temps_init_emition = 25
+
 class Dommaine_colision():
     def __init__(self, fin_de_sim):
         self.time = 0
@@ -22,6 +24,13 @@ class Dommaine_colision():
     def ajout_event(self, event):
         self.next_events.append(event)
         self.next_events.sort()
+    
+    def __repr__(self):
+        return """Dommaine de colision au temps {}, avec :
+            -{} machines 
+            -{} evenements à venir
+            -{} evenement passés
+            """.format(self.time, len(self.machines), len(self.next_events ), len(self.past_events))
 
 class Machine():
     """
@@ -34,12 +43,18 @@ class Machine():
         self.dommaine = dommaine
         self.events = []
         self.loi = loi
+        self.etat = M_INACTIF
+        self.nombre_echec = 0
     
     def ajout_event(self, event):
         self.events.append(event)
         self.events.sort()
         self.dommaine.ajout_event(event)
 
+    def attendre(self):
+        dt = self.loi(self.nombre_echec)
+        
+        
 class Etat_dommaine():
     """
     etat de la liaison
@@ -62,7 +77,7 @@ class Etat_dommaine():
 
 class Etat_machine():
     """
-    r - rien
+    i - rien
     d - debut de transmition
     e - emition
     a - attente suite a une colision
@@ -71,7 +86,7 @@ class Etat_machine():
         """
         initinalise un objet representant l'état d'une machine
         """
-        if type in ('r', 'd', 'e', 'a'):
+        if type in ('i', 'd', 'e', 'a'):
             self.type = type
         else:
             raise ValueError
@@ -114,13 +129,30 @@ class Loi():
         if X < 0:
             X = 0
         return int(round(X))
-        
+
+class Event_debut_emition(Event):
+    def __init__(self, a ):
+        pass
+
+
+
+
+
+
+
+
+
+
+
+
 D_LIBRE = Etat_dommaine('f')
 D_RISQUE = Etat_dommaine('r')
 D_COLISION = Etat_dommaine('c')
 D_OCCUPE = Etat_dommaine('o')
 
-M_RIEN = Etat_machine('r')
+M_INACTIF = Etat_machine('i')
 M_DEBUT = Etat_machine('d')
 M_EMITION = Etat_machine('e')
 M_ATTENNTE = Etat_machine('a')
+
+DOM = Dommaine_colision(1000)
