@@ -1,14 +1,40 @@
 digraph G {
-
-  D_LIBRE -> D_RISQUE;
-  D_RISQUE -> D_OCCUPE;
-  D_OCCUPE -> D_LIBRE;
-  D_RISQUE -> D_COLISION;
-  D_COLISION -> D_LIBRE;
-  
-  M_INACTIF -> M_DEBUT;
-  M_DEBUT -> M_EMITION;
-  M_DEBUT -> M_ATTENTE;
-  M_ATTENTE -> M_DEBUT;
-  M_EMITION -> M_INACTIF;
+    subgraph cluster_domaine{
+        style=filled;
+    color=lightgrey;
+    node [style=filled,color=white, shape = rectangle];
+    D_LIBRE;
+    D_RISQUE;
+    D_OCCUPE;
+    D_COLLISION;
+    D_LIBRE -> D_RISQUE [label = "Une machine commence\nà parler"]
+    D_OCCUPE -> D_LIBRE [label = "Une machine fini\nde parler"]
+    D_RISQUE -> D_COLLISION [label ="Une machine commence\nà parler"]
+    D_RISQUE -> D_OCCUPE [label = "Une machine fini\nde s'initialiser"]
+    D_COLLISION -> D_LIBRE [label = "Toute les machines\nont fini de parler"]
+    D_init [shape = circle, label = " "]
+    D_init -> D_LIBRE
+    }
+    
+    subgraph cluster_machine {
+        style=filled;
+    color=lightgrey;
+    node [style=filled,color=white, shape = rectangle];
+    M_init [shape = circle, label = " "]
+    M_INACTIF
+    M_CHOIX [shape = diamond, label = "Le domaine est\nvisiblement libre"]
+    M_INIT
+    M_ATTENTE_O
+    M_TRANSMITION
+    M_ATTENTE_C
+    M_init -> M_INACTIF
+    M_INACTIF -> M_CHOIX [label = "On veux envoyer un message"]
+    M_CHOIX -> M_INIT [label = "OUI"]
+    M_CHOIX -> M_ATTENTE_O [label ="NON"]
+    M_INIT -> M_TRANSMITION [label = "Apres le temps\nd'initialisation"]
+    M_TRANSMITION -> M_INACTIF [label = "Communication fini"]
+    M_ATTENTE_O -> M_CHOIX [label = "Temps d'attente"]
+    M_INIT -> M_ATTENTE_C [label = "Une autre machine\ncommence de parler"]
+    M_ATTENTE_C -> M_CHOIX [label = "Temps d'attente aléatoire"]
+    }
 }
