@@ -22,8 +22,15 @@ package "Representation des états" <<Frame>> {
         Etat_Machine <|-- Etat_M_Attente_O: Inheritance
         Etat_Machine <|-- Etat_M_Attente_C: Inheritance
         Etat_Machine <|-- Etat_M_Initial: Inheritance
+        Etat_Machine <|-- Etat_M_Fin_initial: Inheritance
         Etat_Machine <|-- Etat_M_Transmition: Inheritance
     }
+}
+
+package "Representation des évenements" <<Frame>>{
+    Class Event
+    Event <|-- Etat_Never: Inheritance
+    Event <|-- Etat_Timed: Inheritance
 }
 Etat <|-- Etat_Domaine: Inheritance
 Etat <|-- Etat_Machine: Inheritance
@@ -34,11 +41,16 @@ Machine "1" *-- "1" Etat_Machine: Composition
 Domaine : +time
 Domaine : +machines
 Domaine : +etat
+Domaine : +reagir(Event)
+Domaine : +Events
+Domaine : +goto_next_event()
 
 Machine : +domaine
 Machine : +etat
+Machine : +reagir(Event)
 
 Etat : +etat_suivant(Event)
+Etat : +temps_debut
 
 Etat_Machine : +machine
 Etat_Machine : +parlant
@@ -49,4 +61,7 @@ Etat_Domaine : +reelement_libre
 Etat_Domaine : +machines_parlantes[]
 Machine "0..*" o-- "1" Etat_Domaine
 
+Etat_D_Collision : +Nombre_de_parlantes
+
+Etat_Machine : +event_fin
 @enduml
