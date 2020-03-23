@@ -17,7 +17,7 @@ package "Representation des états" <<Frame>> {
         Etat_Domaine <|-- Etat_D_Collision: Inheritance
     }
     
-    package "Etat des machines" <<Frame>>{
+    package "Etat des machines" <<Frame>>{
         Etat_Machine <|-- Etat_M_Idle: Inheritance
         Etat_Machine <|-- Etat_M_Attente_O: Inheritance
         Etat_Machine <|-- Etat_M_Attente_C: Inheritance
