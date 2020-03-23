@@ -1,0 +1,22 @@
+@startuml
+
+title Diagramme d'etat du dommaine
+[*] --> M_Idle
+state join <<join>>
+M_Idle --> join : "Volonté d'envoyer un message"
+join --> M_Initial : "Domaine visiblement libre"
+join --> M_Attente_O : "Domaine visiblement occupe"
+M_Attente_O --> M_Initial : "Domaine visiblement libre"
+M_Initial --> M_Fin_initial :"Une autre machine\ncommence à parler"
+M_Fin_initial --> M_Attente_C :"Fin du temps\nd'initialisation"
+M_Attente_C --> join: "Fin du temps d'attente"
+M_Initial --> M_Transmition :"Fin du temps\nd'initialisation"
+M_Transmition --> M_Idle :"Fin de communication"
+
+M_Idle : Parlant = False
+M_Attente_O : Parlant = False
+M_Initial : Parlant = True
+M_Fin_initial : Parlant = True
+M_Attente_C : Parlant = False
+M_Transmition : Parlant = True
+@enduml

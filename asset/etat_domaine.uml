@@ -1,0 +1,23 @@
+@startuml
+
+title Diagramme d'etat du dommaine
+[*] --> D_Libre
+D_Libre --> D_Risque : "Une machine commence à parler"
+D_Risque --> D_Occupe : "Une machine fini de s'initialiser"
+D_Occupe --> D_Libre : "Une machine fini de transmetre"
+D_Risque --> D_Collision : "Une machine commence à parler"
+D_Collision --> D_Libre : "Nombre de parlant == 0"
+
+D_Libre : visiblement_libre = True
+D_Libre : reelement_libre = True
+
+D_Risque : visiblement_libre = True
+D_Risque : reelement_libre = False
+
+D_Occupe : visiblement_libre = False
+D_Occupe : reelement_libre = False
+
+D_Collision : visiblement_libre = True
+D_Collision : reelement_libre = False
+
+@enduml

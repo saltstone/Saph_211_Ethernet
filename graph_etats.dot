@@ -22,15 +22,15 @@ digraph G {
     node [style=filled,color=white, shape = rectangle];
     M_init [shape = circle, label = " "]
     M_INACTIF
-    M_CHOIX [shape = diamond, label = "Le domaine est\nvisiblement libre"]
+    M_CHOIX [shape = diamond, label = "Le domaine est\nvisiblement libre ?"]
     M_INIT
     M_ATTENTE_O
     M_TRANSMITION
     M_ATTENTE_C
     M_init -> M_INACTIF
     M_INACTIF -> M_CHOIX [label = "On veux envoyer un message"]
-    M_CHOIX -> M_INIT [label = "OUI"]
-    M_CHOIX -> M_ATTENTE_O [label ="NON"]
+    M_CHOIX -> M_INIT [label = "OUI", tailport = w]
+    M_CHOIX -> M_ATTENTE_O [label ="NON", tailport = e]
     M_INIT -> M_TRANSMITION [label = "Apres le temps\nd'initialisation"]
     M_TRANSMITION -> M_INACTIF [label = "Communication fini"]
     M_ATTENTE_O -> M_CHOIX [label = "Temps d'attente"]

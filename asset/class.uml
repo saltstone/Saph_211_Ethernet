@@ -1,0 +1,52 @@
+@startuml
+
+title Relationships - Class Diagram
+package "Elements réels" <<Frame>> {
+    class Domaine
+    class Machine
+}
+package "Representation des états" <<Frame>> {
+    class Etat
+    class Etat_Domaine
+    class Etat_Machine
+    
+    package "Etat du domaine" <<Frame>> {
+        Etat_Domaine <|-- Etat_D_Libre: Inheritance
+        Etat_Domaine <|-- Etat_D_Risque: Inheritance
+        Etat_Domaine <|-- Etat_D_Occupe: Inheritance
+        Etat_Domaine <|-- Etat_D_Collision: Inheritance
+    }
+    
+    package "Etat des machines" <<Frame>>{
+        Etat_Machine <|-- Etat_M_Idle: Inheritance
+        Etat_Machine <|-- Etat_M_Attente_O: Inheritance
+        Etat_Machine <|-- Etat_M_Attente_C: Inheritance
+        Etat_Machine <|-- Etat_M_Initial: Inheritance
+        Etat_Machine <|-- Etat_M_Transmition: Inheritance
+    }
+}
+Etat <|-- Etat_Domaine: Inheritance
+Etat <|-- Etat_Machine: Inheritance
+Domaine "1" *-up- "many" Machine: Composition
+Domaine "1" *-- "1" Etat_Domaine: Composition
+Machine "1" *-- "1" Etat_Machine: Composition
+
+Domaine : +time
+Domaine : +machines
+Domaine : +etat
+
+Machine : +domaine
+Machine : +etat
+
+Etat : +etat_suivant(Event)
+
+Etat_Machine : +machine
+Etat_Machine : +parlant
+
+Etat_Domaine : +domaine
+Etat_Domaine : +visiblement_libre
+Etat_Domaine : +reelement_libre
+Etat_Domaine : +machines_parlantes[]
+Machine "0..*" o-- "1" Etat_Domaine
+
+@enduml
