@@ -2,7 +2,7 @@
 Projet de ENS-PS, Saphire 211
 
 ## Modélisation du domaine de collision:
-Le domaine est composé de plusieurs machines. On represente tout cela sous la forme de machines à états. Chaque machines du dommaines est une machines à états differente, et le dommaine en est une autre:
+Le domaine est composé de plusieurs machines. On represente tout cela sous la forme de machines à états. Chaque machines du dommaines est une machines à états differente, et le dommaine en est une autre.
 
 ### Les machines:
 
